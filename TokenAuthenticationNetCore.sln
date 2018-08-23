@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokenAuthenticationNetCore", "TokenAuthenticationNetCore\TokenAuthenticationNetCore.csproj", "{0419C4AD-AA95-4BA3-914F-667BD4D95DAF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0419C4AD-AA95-4BA3-914F-667BD4D95DAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0419C4AD-AA95-4BA3-914F-667BD4D95DAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0419C4AD-AA95-4BA3-914F-667BD4D95DAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0419C4AD-AA95-4BA3-914F-667BD4D95DAF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B708BB70-C2FA-4DDF-B131-330854A6C66D}
+	EndGlobalSection
+EndGlobal

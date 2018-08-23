@@ -1,0 +1,28 @@
+C:\Users\m1039332\Documents\Visual Studio 2017\Projects\TokenAuthenticationNetCore\TokenAuthenticationNetCore\bin\Debug\netcoreapp2.1\TokenAuthenticationNetCore.deps.json
+C:\Users\m1039332\Documents\Visual Studio 2017\Projects\TokenAuthenticationNetCore\TokenAuthenticationNetCore\bin\Debug\netcoreapp2.1\TokenAuthenticationNetCore.runtimeconfig.json
+C:\Users\m1039332\Documents\Visual Studio 2017\Projects\TokenAuthenticationNetCore\TokenAuthenticationNetCore\bin\Debug\netcoreapp2.1\TokenAuthenticationNetCore.runtimeconfig.dev.json
+C:\Users\m1039332\Documents\Visual Studio 2017\Projects\TokenAuthenticationNetCore\TokenAuthenticationNetCore\bin\Debug\netcoreapp2.1\TokenAuthenticationNetCore.dll
+C:\Users\m1039332\Documents\Visual Studio 2017\Projects\TokenAuthenticationNetCore\TokenAuthenticationNetCore\obj\Debug\netcoreapp2.1\TokenAuthenticationNetCore.csprojAssemblyReference.cache
+C:\Users\m1039332\Documents\Visual Studio 2017\Projects\TokenAuthenticationNetCore\TokenAuthenticationNetCore\obj\Debug\netcoreapp2.1\TokenAuthenticationNetCore.csproj.CoreCompileInputs.cache
+C:\Users\m1039332\Documents\Visual Studio 2017\Projects\TokenAuthenticationNetCore\TokenAuthenticationNetCore\obj\Debug\netcoreapp2.1\TokenAuthenticationNetCore.RazorAssemblyInfo.cache
+C:\Users\m1039332\Documents\Visual Studio 2017\Projects\TokenAuthenticationNetCore\TokenAuthenticationNetCore\obj\Debug\netcoreapp2.1\TokenAuthenticationNetCore.RazorAssemblyInfo.cs
+C:\Users\m1039332\Documents\Visual Studio 2017\Projects\TokenAuthenticationNetCore\TokenAuthenticationNetCore\obj\Debug\netcoreapp2.1\TokenAuthenticationNetCore.AssemblyInfoInputs.cache
+C:\Users\m1039332\Documents\Visual Studio 2017\Projects\TokenAuthenticationNetCore\TokenAuthenticationNetCore\obj\Debug\netcoreapp2.1\TokenAuthenticationNetCore.AssemblyInfo.cs
+C:\Users\m1039332\Documents\Visual Studio 2017\Projects\TokenAuthenticationNetCore\TokenAuthenticationNetCore\obj\Debug\netcoreapp2.1\TokenAuthenticationNetCore.RazorTargetAssemblyInfo.cache
+C:\Users\m1039332\Documents\Visual Studio 2017\Projects\TokenAuthenticationNetCore\TokenAuthenticationNetCore\bin\Debug\netcoreapp2.1\TokenAuthenticationNetCore.pdb
+C:\Users\m1039332\Documents\Visual Studio 2017\Projects\TokenAuthenticationNetCore\TokenAuthenticationNetCore\obj\Debug\netcoreapp2.1\TokenAuthenticationNetCore.dll
+C:\Users\m1039332\Documents\Visual Studio 2017\Projects\TokenAuthenticationNetCore\TokenAuthenticationNetCore\obj\Debug\netcoreapp2.1\TokenAuthenticationNetCore.pdb
+D:\Dotnet\WebApi\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore\bin\Debug\netcoreapp2.1\TokenAuthenticationNetCore.deps.json
+D:\Dotnet\WebApi\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore\bin\Debug\netcoreapp2.1\TokenAuthenticationNetCore.runtimeconfig.json
+D:\Dotnet\WebApi\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore\bin\Debug\netcoreapp2.1\TokenAuthenticationNetCore.runtimeconfig.dev.json
+D:\Dotnet\WebApi\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore\bin\Debug\netcoreapp2.1\TokenAuthenticationNetCore.dll
+D:\Dotnet\WebApi\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore\bin\Debug\netcoreapp2.1\TokenAuthenticationNetCore.pdb
+D:\Dotnet\WebApi\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore\obj\Debug\netcoreapp2.1\TokenAuthenticationNetCore.csproj.CoreCompileInputs.cache
+D:\Dotnet\WebApi\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore\obj\Debug\netcoreapp2.1\TokenAuthenticationNetCore.RazorAssemblyInfo.cache
+D:\Dotnet\WebApi\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore\obj\Debug\netcoreapp2.1\TokenAuthenticationNetCore.RazorAssemblyInfo.cs
+D:\Dotnet\WebApi\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore\obj\Debug\netcoreapp2.1\TokenAuthenticationNetCore.AssemblyInfoInputs.cache
+D:\Dotnet\WebApi\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore\obj\Debug\netcoreapp2.1\TokenAuthenticationNetCore.AssemblyInfo.cs
+D:\Dotnet\WebApi\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore\obj\Debug\netcoreapp2.1\TokenAuthenticationNetCore.RazorTargetAssemblyInfo.cache
+D:\Dotnet\WebApi\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore\obj\Debug\netcoreapp2.1\TokenAuthenticationNetCore.dll
+D:\Dotnet\WebApi\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore\obj\Debug\netcoreapp2.1\TokenAuthenticationNetCore.pdb
+D:\Dotnet\WebApi\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore-master\TokenAuthenticationNetCore\obj\Debug\netcoreapp2.1\TokenAuthenticationNetCore.csprojAssemblyReference.cache
