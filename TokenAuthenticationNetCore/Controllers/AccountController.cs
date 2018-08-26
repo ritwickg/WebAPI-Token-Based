@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -14,8 +15,11 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using TokenAuthenticationNetCore.Data;
+using TokenAuthenticationNetCore.Data.Models;
 using TokenAuthenticationNetCore.Extensions;
 using TokenAuthenticationNetCore.Models;
+using TokenAuthenticationNetCore.Services;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace TokenAuthenticationNetCore.Controllers
@@ -27,12 +31,13 @@ namespace TokenAuthenticationNetCore.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;      
         private readonly IConfiguration _configuration;
-
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration)
+        private readonly ApplicationIdentityDbContext _context;
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration,ApplicationIdentityDbContext applicationIdentityDbContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
+            _context = applicationIdentityDbContext;
         }
 
         [AllowAnonymous]
@@ -85,12 +90,22 @@ namespace TokenAuthenticationNetCore.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(newUser, false);
-                    //await _userManager.AddToRoleAsync(newUser, "USER");
-
+                    
+                    await _userManager.AddToRoleAsync(newUser,"User");
                     string jwtSecurityToken = await GenerateJwtToken(newUser);
                     responseObject.Add("access_token", JToken.FromObject(jwtSecurityToken));
                     responseObject.Add("expires", JToken.FromObject(30));
                     responseObject.Add("email", JToken.FromObject(newUser.Email));
+                    bool emailResult = new EmailHandling().SendVerificationEmail(newUser.Email,jwtSecurityToken).GetAwaiter().GetResult();
+                    VerificationEmailModel verificationEmailModel = new VerificationEmailModel
+                    {
+                        RegisterId = Guid.NewGuid(),
+                        Email = newUser.Email,
+                        Token = jwtSecurityToken
+                    };
+                    await _context.Registrations.AddAsync(verificationEmailModel);
+                    await _context.SaveChangesAsync();
+
                     return UtilityExtensions.ReturnResponse(responseObject, HttpStatusCode.Created);
                 }
                 else
@@ -140,18 +155,27 @@ namespace TokenAuthenticationNetCore.Controllers
                 if (signInResult.Succeeded)
                 {
                     ApplicationUser currentlyLoggedinUser = _userManager.Users.SingleOrDefault(x => x.UserName == LoginModelDTO.UserName);
-
+                    IEnumerable<string> role = await _userManager.GetRolesAsync(currentlyLoggedinUser);
+                    if(role.Count()>0)
+                    {
+                        responseObject.Add("role", JToken.FromObject(role.ElementAt(0)));
+                    }
+                    else
+                    {
+                        responseObject.Add("message", JToken.FromObject("User is unauthorized to login!!!"));
+                        return UtilityExtensions.ReturnResponse(responseObject, HttpStatusCode.Unauthorized);
+                    }
                     if(currentlyLoggedinUser == null)
                     {
                         responseObject.Add("message", JToken.FromObject("User with credentials not found"));
                         return UtilityExtensions.ReturnResponse(responseObject, HttpStatusCode.NotFound);
                     }
-
+                    
                     string jwtSecurityToken = await GenerateJwtToken(currentlyLoggedinUser);
                     responseObject.Add("access_token", JToken.FromObject(jwtSecurityToken));
                     responseObject.Add("expires", JToken.FromObject(30));
                     responseObject.Add("email", JToken.FromObject(currentlyLoggedinUser.Email));
-
+                    
                     return UtilityExtensions.ReturnResponse(responseObject, HttpStatusCode.OK);
                 }
                 else
@@ -166,17 +190,65 @@ namespace TokenAuthenticationNetCore.Controllers
                 return UtilityExtensions.ReturnResponse(responseObject, HttpStatusCode.InternalServerError);
             }
         }
+        //public async Task<IActionResult> UpdateUser([FromBody] RegisterUserModel EditedRegisterdUser)
+        //{
 
 
+        //}
+        
+        [HttpPost("VerifyEmail")]
+        public async Task<IActionResult> VerifyEmail([FromBody] VerificationEmailModel VerificationEmailData)
+        {
+            JObject responseObject = new JObject();
+            VerificationEmailModel model = _context.Registrations.Where(x => x.Token == VerificationEmailData.Token && x.Email == VerificationEmailData.Email).FirstOrDefault();
+            try
+            {
+                if (model == null)
+                {
+                    responseObject.Add("message", JToken.FromObject("false"));
+                    return UtilityExtensions.ReturnResponse(responseObject, HttpStatusCode.InternalServerError);
+                }
+                responseObject.Add("message", JToken.FromObject("true"));
+                return UtilityExtensions.ReturnResponse(responseObject, HttpStatusCode.OK);
+            }
+            catch(Exception ex)
+            {
+                responseObject.Add("message", JToken.FromObject("false"));
+                return UtilityExtensions.ReturnResponse(responseObject, HttpStatusCode.InternalServerError);
+            }
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("AddAdmin")]
+        public IActionResult AddAdmin([FromBody] JObject AddAdminRequestBody)
+        {
+            JObject resposneObject = new JObject();
+
+            resposneObject.Add("message", JToken.FromObject("Admin Success"));
+            return UtilityExtensions.ReturnResponse(resposneObject,HttpStatusCode.OK);
+        }
+        [Authorize(Roles = "User")]
+        [HttpPost("UserHome")]
+        public IActionResult UserHome([FromBody] JObject AddAdminRequestBody)
+        {
+            JObject resposneObject = new JObject();
+
+            resposneObject.Add("message", JToken.FromObject("User Success"));
+            return UtilityExtensions.ReturnResponse(resposneObject, HttpStatusCode.OK);
+        }
         #region Helper methods
         private async Task<string> GenerateJwtToken(ApplicationUser user)
         {
+            IEnumerable<string> roleList =await _userManager.GetRolesAsync(user);
+
             List<Claim> claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim("DateTime",DateTime.UtcNow.ToString())
+                new Claim(ClaimTypes.Role,roleList.ElementAt(0)),
+                new Claim(JwtRegisteredClaimNames.Iat,DateTime.UtcNow.Second.ToString())
             };
 
             //Generate your own secret key using the following lines:

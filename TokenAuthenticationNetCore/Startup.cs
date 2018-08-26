@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using System.Threading.Tasks;
 using TokenAuthenticationNetCore.Data;
 using TokenAuthenticationNetCore.Models;
 
@@ -36,7 +37,8 @@ namespace TokenAuthenticationNetCore
             services.AddCors( options => options.AddPolicy("AllowCors",
                     builder =>
                     {
-                        builder.AllowAnyOrigin()
+
+                        builder.WithOrigins("http://localhost:4200") 
                            .AllowAnyHeader()
                            .AllowAnyMethod();
                     }
@@ -76,7 +78,7 @@ namespace TokenAuthenticationNetCore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationIdentityDbContext dbContext)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationIdentityDbContext dbContext, IServiceProvider serviceProvider)
         {
             app.UseCors("AllowCors");
             // ===== Create tables ======
@@ -95,6 +97,44 @@ namespace TokenAuthenticationNetCore
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            CreateUserRoles(serviceProvider).Wait();
+        }
+        private async Task CreateUserRoles(IServiceProvider serviceProvider)
+        {
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            
+            IdentityResult roleResult;
+            //Adding Admin Role
+            
+            var roleCheck = await RoleManager.RoleExistsAsync("Admin");
+            var roleUserCheck = await RoleManager.RoleExistsAsync("User");
+            if (!roleCheck)
+            {
+                //create the roles and seed them to the database
+                roleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
+            }
+            if(!roleUserCheck)
+            {
+                IdentityResult roleUserResult = await RoleManager.CreateAsync(new IdentityRole("User"));
+            }
+            //Assign Admin role to the main User here we have given our newly registered 
+            //login id for Admin management
+            ApplicationUser user = await UserManager.FindByEmailAsync("admin@admin.com");
+            if(user != null)
+            {
+                ApplicationUser newUser = new ApplicationUser
+                {
+                    UserName = "admin",
+                    Email = "admin@admin.com",
+                    FirstName = "Admin",
+                    LastName = "Admin",
+                    Age = 1
+                };
+
+                IdentityResult result = await UserManager.CreateAsync(newUser, "Admin@1234");
+                await UserManager.AddToRoleAsync(newUser, "Admin");
+            }
         }
     }
 }
